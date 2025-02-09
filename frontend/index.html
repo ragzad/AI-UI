@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI-UI Frontend</title>
+  <!-- Including Bootstrap for quick responsive styling -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script>
+    // On page load, fetch available AI models from the API.
+    async function fetchModels() {
+      try {
+        const response = await fetch('/models');
+        const models = await response.json();
+        let output = '<h2>Available AI Models</h2><ul class="list-group">';
+        models.forEach(model => {
+          output += `<li class="list-group-item">
+                       <strong>${model.name}</strong> (Version: ${model.version})
+                     </li>`;
+        });
+        output += '</ul>';
+        document.getElementById('models').innerHTML = output;
+      } catch (error) {
+        document.getElementById('models').innerHTML = '<p>Error fetching models.</p>';
+      }
+    }
+    
+    window.onload = fetchModels;
+  </script>
+</head>
+<body class="container mt-4">
+  <h1>Welcome to the AI-UI Interface</h1>
+  <div id="models">
+    <p>Loading models...</p>
+  </div>
+  <!-- Additional interface elements (forms, buttons, etc.) can be added here -->
+</body>
+</html>
